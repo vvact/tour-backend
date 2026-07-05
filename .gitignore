@@ -94,3 +94,14 @@ staticfiles
 mediafiles
 static
 media
+
+# Media files (user uploads)
+/media/
+# Collected static files (production)
+/staticfiles/
+# Logs
+/logs/
+# Environment variables
+.env
+*.log
+db.sqlite3

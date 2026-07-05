@@ -37,6 +37,7 @@ DJANGO_APPS = [
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
+    "whitenoise.runserver_nostatic",
     "django.contrib.staticfiles",
     "django.contrib.sites",
 ]
@@ -57,6 +58,7 @@ SITE_ID = 1
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "corsheaders.middleware.CorsMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -128,22 +130,15 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = "static/"
-
-# Directories where Django looks for static files (besides app-level static/)
+# Static files (CSS, JavaScript, Images)
+STATIC_URL = "/static/"  # <-- Missing leading slash; let's fix
 STATICFILES_DIRS = [
-    BASE_DIR / "static",  # Project-level static folder (create this)
+    BASE_DIR / "static",
 ]
-
-# Where 'collectstatic' will gather all static files for production
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
-# ============================================
-# MEDIA FILES (User-uploaded files)
-# ============================================
+# Media files (User-uploaded files)
 MEDIA_URL = "/media/"
-
-# Absolute filesystem path where media files will be stored
 MEDIA_ROOT = BASE_DIR / "media"
 
 # Default primary key field type

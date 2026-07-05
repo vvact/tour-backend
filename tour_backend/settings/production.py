@@ -41,4 +41,4 @@ X_FRAME_OPTIONS = "DENY"
 
 # Static & Media file serving (in production, use WhiteNoise or separate CDN)
 # We'll add Whitenoise later, but for now, make sure STATIC_ROOT is set
-# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
