@@ -3,24 +3,31 @@ from pathlib import Path
 import environ
 from dotenv import load_dotenv
 
-# Hardcoded absolute path
-ENV_FILE = "/home/buda/projects/tour-backend/.env"
-load_dotenv(ENV_FILE, override=True)
-print("SECRET_KEY from os.environ:", os.environ.get('SECRET_KEY'))
+# Build paths inside the project like this: BASE_DIR / 'subdir'.
+# Correct: three parents to go from settings/base.py to project root
+BASE_DIR = Path(__file__).resolve().parent.parent.parent   # <-- Fixed!
 
-BASE_DIR = Path(__file__).resolve().parent.parent
+# Load .env from the project root – works on any machine
+env_file = BASE_DIR / '.env'
+if not env_file.exists():
+    raise FileNotFoundError(
+        f"❌ .env file not found at {env_file}. "
+        "Please create one using .env.example as a template."
+    )
+load_dotenv(env_file, override=True)
 
+# Initialize environ (reads from os.environ, which load_dotenv just populated)
 env = environ.Env(
     DEBUG=(bool, False),
     ALLOWED_HOSTS=(list, [])
 )
 
-# <-- REMOVED the read_env line
-
+# Now read the variables – they come from the environment
 SECRET_KEY = env('SECRET_KEY')
 DEBUG = env('DEBUG')
 ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
 
+# ... rest of your file (apps, middleware, etc.) stays unchanged ...
 
 
 # Application definition
