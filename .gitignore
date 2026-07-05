@@ -89,3 +89,8 @@ target/
 # pipenv / poetry
 Pipfile.lock
 poetry.lock
+
+staticfiles
+mediafiles
+static
+media

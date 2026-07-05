@@ -1,11 +1,16 @@
 import os
+import sys
 from pathlib import Path
 import environ
 from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 # Correct: three parents to go from settings/base.py to project root
-BASE_DIR = Path(__file__).resolve().parent.parent.parent   # <-- Fixed!
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
+
+# --- ADD THIS BLOCK: Add 'apps' directory to Python's import path ---
+sys.path.insert(0, str(BASE_DIR / 'apps'))
+# ----------------------------------------------------------------
 
 # Load .env from the project root – works on any machine
 env_file = BASE_DIR / '.env'
@@ -27,8 +32,6 @@ SECRET_KEY = env('SECRET_KEY')
 DEBUG = env('DEBUG')
 ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
 
-# ... rest of your file (apps, middleware, etc.) stays unchanged ...
-
 
 # Application definition
 
@@ -39,10 +42,22 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+    
+    # Third-party apps
+    'rest_framework',
+    'corsheaders',
+    'django_filters',
+    
+    # Local apps
+    'core',
 ]
+
+SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -117,7 +132,43 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+# Directories where Django looks for static files (besides app-level static/)
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',  # Project-level static folder (create this)
+]
+
+# Where 'collectstatic' will gather all static files for production
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+# ============================================
+# MEDIA FILES (User-uploaded files)
+# ============================================
+MEDIA_URL = '/media/'
+
+# Absolute filesystem path where media files will be stored
+MEDIA_ROOT = BASE_DIR / 'media'
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Phone number field configuration
+PHONENUMBER_DEFAULT_REGION = 'KE'   # Kenya, adjust to your primary country
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',
+    ],
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer',
+    ],
+    'DEFAULT_FILTER_BACKENDS': [
+        'django_filters.rest_framework.DjangoFilterBackend',
+    ],
+}
