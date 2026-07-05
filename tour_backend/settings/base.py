@@ -1,29 +1,26 @@
 import os
 from pathlib import Path
 import environ
+from dotenv import load_dotenv
 
+# Hardcoded absolute path
+ENV_FILE = "/home/buda/projects/tour-backend/.env"
+load_dotenv(ENV_FILE, override=True)
+print("SECRET_KEY from os.environ:", os.environ.get('SECRET_KEY'))
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 env = environ.Env(
-    # Set default values and casting types
     DEBUG=(bool, False),
     ALLOWED_HOSTS=(list, [])
 )
 
-environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
+# <-- REMOVED the read_env line
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = env('SECRET_KEY')
-
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG')
-
 ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
+
 
 
 # Application definition
