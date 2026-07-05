@@ -6,13 +6,11 @@ from .base import *
 # ============================================
 
 # Debug & Hosts
-DEBUG = env('DEBUG')                        # Should be True in .env
-ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')   # localhost,127.0.0.1
+DEBUG = env("DEBUG")  # Should be True in .env
+ALLOWED_HOSTS = env.list("ALLOWED_HOSTS")  # localhost,127.0.0.1
 
 # Database (SQLite for development)
-DATABASES = {
-    'default': env.db('DATABASE_URL', default='sqlite:///db.sqlite3')
-}
+DATABASES = {"default": env.db("DATABASE_URL", default="sqlite:///db.sqlite3")}
 
 # ============================================
 # STATIC & MEDIA FILES (Served in development)
