@@ -1,0 +1,33 @@
+asgiref @ file:///home/task_177184281161208/croot/asgiref_1771842846079/work
+attrs==26.1.0
+certifi==2026.6.17
+charset-normalizer==3.4.7
+cloudinary==1.45.0
+Django @ file:///home/task_176432920734718/conda-bld/django_1764329221349/work
+django-cloudinary-storage==0.3.0
+django-cors-headers==4.9.0
+django-environ==0.14.0
+django-filter==25.2
+djangorestframework==3.17.1
+djangorestframework_simplejwt==5.5.1
+drf-spectacular==0.29.0
+gunicorn==26.0.0
+idna==3.18
+inflection==0.5.1
+jsonschema==4.26.0
+jsonschema-specifications==2025.9.1
+packaging==26.0
+pillow==12.3.0
+psycopg==3.3.4
+psycopg-binary==3.3.4
+PyJWT==2.13.0
+PyYAML==6.0.3
+referencing==0.37.0
+requests==2.34.2
+rpds-py==2026.6.3
+six==1.17.0
+sqlparse @ file:///home/task_178117660207179/croot/sqlparse_1781176696965/work
+typing_extensions==4.16.0
+uritemplate==4.2.0
+urllib3==2.7.0
+whitenoise==6.12.0

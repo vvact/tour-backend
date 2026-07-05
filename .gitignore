@@ -1,0 +1,91 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Virtual environments / Conda (if accidentally placed in project)
+.venv
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# Environment variables (CRITICAL - DO NOT COMMIT)
+.env
+.env.local
+.env.*.local
+
+# Django specific
+*.log
+*.pot
+*.pyc
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+/media/
+/static/
+/staticfiles/
+/collectstatic/
+
+# Database backups
+*.sqlite3
+*.bak
+
+# Testing / Coverage
+.coverage
+.coverage.*
+htmlcov/
+.pytest_cache/
+.tox/
+*.cover
+*.hypothesis
+nosetests.xml
+
+# MyPy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# pytype static type analyzer
+.pytype/
+
+# IDE / Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+*.iml
+.project
+.pydevproject
+
+# Logs and temporary files
+logs/
+*.log
+tmp/
+temp/
+
+# Celery / Redis / RabbitMQ
+celerybeat-schedule
+celerybeat.pid
+
+# Django migrations (Optional: uncomment if you want to ignore migrations entirely)
+# */migrations/*.py
+# !*/migrations/__init__.py
+
+# Sphinx documentation
+docs/_build/
+
+# PyBuilder
+target/
+
+# pipenv / poetry
+Pipfile.lock
+poetry.lock
