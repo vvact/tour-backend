@@ -15,6 +15,7 @@ urlpatterns = [
     path("api/redoc/", SpectacularRedocView.as_view(url_name="schema"), name="redoc"),
     path("admin/", admin.site.urls),
     path("api/", include("core.urls")),
+    path("api/", include('users.urls')),
 ]
 
 # Serve static & media files only when DEBUG=True (development)

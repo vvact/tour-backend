@@ -1,6 +1,10 @@
 import sys
 from pathlib import Path
 
+import logging
+import logging.config
+from django.utils.log import DEFAULT_LOGGING
+
 import environ
 from dotenv import load_dotenv
 
@@ -51,6 +55,7 @@ THIRF_PARTY_APPS = [
 
 LOCAL_APPS = [
     "core",
+    "users",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRF_PARTY_APPS + LOCAL_APPS
@@ -114,6 +119,8 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+
+AUTH_USER_MODEL = 'users.User'
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
@@ -181,4 +188,95 @@ SPECTACULAR_SETTINGS = {
     "DESCRIPTION": "API for managing tours, bookings, and reviews",
     "VERSION": "1.0.0",
     "SERVE_INCLUDE_SCHEMA": False,
+}
+
+
+
+# ============================================
+# LOGGING CONFIGURATION
+# ============================================
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,  # Preserve Django's default loggers
+
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
+            'style': '{',
+        },
+        'simple': {
+            'format': '{levelname} {message}',
+            'style': '{',
+        },
+        'django': {
+            'format': '{levelname} {asctime} {name} {message}',
+            'style': '{',
+        },
+    },
+
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'verbose',
+            'level': 'DEBUG',   # Console always shows debug in dev
+        },
+        'file_general': {
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': BASE_DIR / 'logs' / 'django.log',
+            'maxBytes': 1024 * 1024 * 10,  # 10 MB
+            'backupCount': 5,
+            'formatter': 'verbose',
+            'level': 'INFO',
+        },
+        'file_errors': {
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': BASE_DIR / 'logs' / 'errors.log',
+            'maxBytes': 1024 * 1024 * 10,
+            'backupCount': 5,
+            'formatter': 'verbose',
+            'level': 'ERROR',
+        },
+    },
+
+    'loggers': {
+        # Django core loggers
+        'django': {
+            'handlers': ['console', 'file_general', 'file_errors'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+        'django.request': {
+            'handlers': ['console', 'file_errors'],
+            'level': 'ERROR',
+            'propagate': False,
+        },
+        'django.db.backends': {
+            'handlers': ['console'],
+            'level': 'WARNING',   # Set to DEBUG to see SQL queries
+            'propagate': False,
+        },
+        # Third‑party app loggers
+        'rest_framework': {
+            'handlers': ['console', 'file_general'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+        # Your custom apps
+        'core': {
+            'handlers': ['console', 'file_general'],
+            'level': 'DEBUG',      # Will be overridden in prod
+            'propagate': False,
+        },
+        'core': {
+            'handlers': ['console', 'file_general'],
+            'level': 'DEBUG',
+            'propagate': False,
+        },
+    },
+
+    # Root logger – captures everything not covered above
+    'root': {
+        'handlers': ['console', 'file_general', 'file_errors'],
+        'level': 'INFO',
+    },
 }

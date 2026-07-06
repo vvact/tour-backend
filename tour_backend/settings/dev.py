@@ -27,3 +27,7 @@ DATABASES = {"default": env.db("DATABASE_URL", default="sqlite:///db.sqlite3")}
 # Uncomment to add django-debug-toolbar:
 # INSTALLED_APPS += ['debug_toolbar']
 # MIDDLEWARE += ['debug_toolbar.middleware.DebugToolbarMiddleware']
+
+# Email settings (development)
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+DEFAULT_FROM_EMAIL = 'noreply@tour-backend.com'
